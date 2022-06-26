@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{{range .}}
+    <input type="button" value="{{.}}" name="{{.}}" onclick="get_id(this.name)">
+
+{{end}}
+<script>
+
+    let arr = [];
+
+    function get_id(clicked_id){
+
+        arr.push(clicked_id);
+
+        console.log(clicked_id)
+
+        if (arr.length == 2){
+
+            if (arr[0] == arr[1]){
+
+                console.log("Нажали две одинаковые кнопки");
+
+
+                    const element1 = document.getElementsByName(String(clicked_id));
+                    element1[0].remove();
+                    const element2 = document.getElementsByName(String(clicked_id));
+                    element2[0].remove();
+
+
+                arr = [];
+
+            }
+
+
+            else {
+
+                console.log(":((");
+
+                arr = [];
+
+            }
+
+        }
+
+    }
+
+</script>
+</body>
+</html>
