@@ -6,42 +6,64 @@
 </head>
 <body>
 {{range .}}
-    <input type="button" value="{{.}}" name="{{.}}" onclick="get_id(this.name)">
-
+    {{ $id := .Id }}
+    {{ range $index, $element := .Name }}
+        <input type="button" value="{{ $element }}" id="{{index  $id  $index }}" name="{{ $element }}" onclick="get_id(this.name,this.id)">
+    {{end}}
 {{end}}
 <script>
 
+    function del_value() {
+        for (i=1;i<=20;i++){
+
+            let cls = document.getElementById(String(i));
+
+            cls.value = "???";
+        }
+
+    }
+
+
+    setTimeout(del_value, 5000);
+
     let arr = [];
+    let lst_id = [];
 
-    function get_id(clicked_id){
+    function get_id(clicked_name,clicked_id){
 
-        arr.push(clicked_id);
+        lst_id.push(clicked_id)
 
-        console.log(clicked_id)
+        document.getElementById(clicked_id).disabled = true;
 
-        if (arr.length == 2){
+        arr.push(clicked_name);
 
-            if (arr[0] == arr[1]){
+        if (arr.length === 2){
 
-                console.log("Нажали две одинаковые кнопки");
+            if (arr[0] === arr[1]){
 
+                for (let item of arr){
 
-                    const element1 = document.getElementsByName(String(clicked_id));
-                    element1[0].remove();
-                    const element2 = document.getElementsByName(String(clicked_id));
-                    element2[0].remove();
+                    document.getElementsByName(item)[0].remove()
 
+                }
 
                 arr = [];
+
+                lst_id = [];
 
             }
 
-
             else {
 
-                console.log(":((");
+                for(let item of lst_id){
+
+                    document.getElementById(item).disabled = false;
+
+                }
 
                 arr = [];
+
+                lst_id = [];
 
             }
 

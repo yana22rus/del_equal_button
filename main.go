@@ -25,26 +25,45 @@ func main() {
 
 }
 
+
+type data struct {
+
+	Id  []int
+	Name []int
+}
+
 func index(w http.ResponseWriter, r *http.Request) {
 
-	lst := []int{}
+	name := []int{}
+
+	id := []int{}
 
 	for x := 0; x <2; x++ {
 
 		for i := 1; i <= 10; i++ {
 
-			lst = append(lst, i)
+			name = append(name, i)
 
 		}
 	}
 
 	rand.Seed(time.Now().UnixNano())
 
-	for i := len(lst) - 1; i > 0; i-- {
+	for i := len(name) - 1; i > 0; i-- {
 		j := rand.Intn(i + 1)
-		lst[i], lst[j] = lst[j], lst[i]
+		name[i], name[j] = name[j], name[i]
 	}
 
-	tpl.ExecuteTemplate(w, "index.gohtml", lst)
+	for i :=1; i<=20;i++{
+
+		id = append(id,i)
+
+	}
+
+	render := data{id,name}
+
+	render_data := []data{render}
+
+	tpl.ExecuteTemplate(w, "index.gohtml", render_data)
 
 }
